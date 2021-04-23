@@ -22,6 +22,7 @@ Keskiarvo: 7.08
 Mitä jos syötettävään taulukkoon olisikin syystä tai toisesta päätynyt merkkijono?
 
 *laskeKeskiarvo.js*
+
 ![typescript-logo](./0.png)`
 
 
