@@ -22,7 +22,7 @@
     -   TypeScriptin staattinen koodianalyysi varoittaa tyyppivirheistä, jolloin huomatakseen virheitä ei välttämättä tarvitse edes ajaa koodia. Tämä vähentää ajonaikaisia virheitä huomattavasti.
 
 - Tyypit toimii *kooditason* dokumentaationa
-    - JavaScriptin yhteydessä käytetään komesti [JSDoc](https://jsdoc.app/about-getting-started.html)-dokumentaatiota, mutta TypeScriptin tyypit poistavat tämän tarpeen koodin dokumentoidessa itsensä. Tyypitys on myös tiukemmin yhteydessä koodiin ja näin automaattisesti paremmin ajan tasalla kuin *JSDoc*-dokumentaatio.
+    - JavaScriptin yhteydessä käytetään monesti [JSDoc](https://jsdoc.app/about-getting-started.html)-dokumentaatiota, mutta TypeScriptin tyypit poistavat tämän tarpeen koodin dokumentoidessa itsensä. Tyypitys on myös tiukemmin yhteydessä koodiin ja näin automaattisesti paremmin ajan tasalla kuin *JSDoc*-dokumentaatio.
 
 - Tyyppitarkistus mahdollistaa myös älykkäämmät kehitystyökalut ja tarkemman palautteen editorin tasolla
 
