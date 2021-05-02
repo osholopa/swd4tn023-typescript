@@ -7,9 +7,7 @@
 
 - Tiedostopäätteet .ts, .tsx
 
-- Tarjoaa staattisen tyypityksen ominaisuuksia perinteisen JavaScriptin tueksi
-
-- Siinä missä JavaScript on **dynaamisesti** tyypitetty, TypeScript tarjoaa **staattisen** tyypityksen (engl. *static type checking*) ominaisuuksia.
+- Siinä missä JavaScript on **dynaamisesti** tyypitetty, TypeScript tarjoaa **staattisen** tyypityksen (engl. *static type checking*) ominaisuuksia olemassaolevien tueksi. Tämä ei kuitenkaan poista mahdollisuutta käyttää koodissa dynaamista tyypitystä.
 
 - Ennen ajoa TypeScript käännetään JavaScriptiksi, jolloin TypeScript-kääntäjä (tsc) tarkistaa koodin tyypit ja varoittaa mahdollisista virheistä.
 
