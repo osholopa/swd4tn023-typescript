@@ -1,8 +1,8 @@
-# Esimerkki 1. koulutodistus
+# Esimerkki 1. Automaattinen tyyppimuunnos
 
-Otetaan esimerkki, jossa meillä on funktio laskeKeskiarvo(), joka saa parametrikseen kevättodistuksen arvosanat eli taulukon, jonka alkiot ovat kokonaislukuja ja haluamme funktion palauttavan näiden keskiarvon.
+Alla olevassa kuvassa on funktio laskeKeskiarvo(), joka saa parametrikseen kevättodistuksen arvosanat eli taulukon, jonka alkiot ovat kokonaislukuja ja haluamme funktion palauttavan näiden keskiarvon.
 
-Tältä funktio näyttää JavaScriptillä toteutettuna:
+Tältä näyttää funktion yksi mahdollinen JavaScript-toteutus:
 ```
 function laskeKeskiarvo(paattoTodistus) {
     const lkm = paattoTodistus.length
@@ -34,7 +34,7 @@ node laskeKeskiarvo.js
 Summa: 418877768, Lkm: 13
 Keskiarvo: 32221366.77
 ```
-Mielenkiintoista. Ensimmäisten kuuden luvun summa on 41, johon lisätään merkkijono '8'. Kun kokonaislukuun lisätään merkkijono, JavaScript *muuntaa* lopputuloksen merkkijonoksi (ks. [Type coercion](https://developer.mozilla.org/en-US/docs/Glossary/Type_coercion)). Tästä aiheutuu se, että loputkin tähän lisättävät luvut tulee lisätyiksi merkkijonoon, jolloin lopputulos on lopulta 418877768.
+Mielenkiintoista. Ensimmäisten kuuden luvun summa on 41, johon lisätään merkkijono '8'. Aina kun numeroon lisätään merkkijono, JavaScript *muuntaa* lopputuloksen merkkijonoksi (ks. [Type coercion](https://developer.mozilla.org/en-US/docs/Glossary/Type_coercion)). Tästä aiheutuu se, että loputkin tähän lisättävät luvut tulee lisätyiksi merkkijonoon, jolloin lopputulos on lopulta 418877768.
 
 
 
@@ -73,14 +73,16 @@ laskeKeskiarvo.ts:8:61 - error TS2322: Type 'string' is not assignable to type '
     at Function.Module._load (node:internal/modules/cjs/loader:813:14)
     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:76:12)
 ```
-Kuten huomataan, tästä aiheutuu virhe eikä sovellus edes väitä toimivansa.
+Kuten huomataan, tästä aiheutuu virhe eikä sovelluksen kääntäminen onnistu.
 
-Tämän lisäksi koodia ei VS-Coden Typescript-tuen ansiosta tarvitse edes lähteä ajamaan havaitakseen virheen, vaan virheellisestä tyypistä ilmoitetaan jo editorin tasolla.
+Tämän lisäksi koodia ei kielipalvelun ansiosta tarvitse edes lähteä ajamaan havaitakseen virheen, vaan virheellisestä tyypistä ilmoitetaan jo editorin tasolla:
 
 *laskeKeskiarvo.ts*
+
 ![type-error](./1.png)
 
-Nyt kun ollaan huomattu virhe ajoissa, voidaan korjata se, ettei myöhemmin tarvitse ihmetellä.
+Nyt kun ollaan huomattu virhe ajoissa, voidaan korjata se. Pienten huomaamattomien virheiden debuggaaminen voi pahimmillaan kestää tunteja ja olla hermoja raastavaa.
+
 ```
 ts-node laskeKeskiarvo.ts
 Summa: 92, Lkm: 13

@@ -7,7 +7,7 @@
 
 # [Aloita](./src/content/0/README.md)
 
-# Materiaalin lähteet
+# Käytetyt lähteet
 - [https://www.typescriptlang.org/](https://www.typescriptlang.org/)
 - [https://en.wikipedia.org/wiki/TypeScript](https://en.wikipedia.org/wiki/TypeScript)
 - [https://www.altexsoft.com/blog/typescript-pros-and-cons/](https://www.altexsoft.com/blog/typescript-pros-and-cons/)
