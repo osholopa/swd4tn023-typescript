@@ -105,8 +105,10 @@ Näin toteutettuna tyyppitiedon refaktorointi on hyvin suoraviivaista, sillä ty
 
 ## Huomioitavaa
 
-Tyypin määrittely pelkästään näin ei takaa virheetöntä koodia tai ulkoisesta lähteestä tulleen tiedon oikeellisuutta. Tässä luotetaan siihen, että tiedetään etukäteen missä muodossa data tulee. Näin ei aina kuitenkaan ole ja silloin tiedon ja siitä muodostettavien tyyppien oikeellisuutta on mahdollisuus tarkistaa nk. [_type guard_](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)eilla, eli funktioilla, jotka tarkastaa, että oliolta löytyy oikeat kentät oikean tyyppisinä ja joiden palautustyyppi on nk. [tyyppipredikaatti](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) (eng. _type predicate_)
+- Tyypin määrittely pelkästään näin ei takaa virheetöntä koodia tai ulkoisesta lähteestä tulleen tiedon oikeellisuutta. Tässä luotetaan siihen, että tiedetään etukäteen missä muodossa data tulee. Näin ei aina kuitenkaan ole ja silloin tiedon ja siitä muodostettavien tyyppien oikeellisuutta on mahdollisuus tarkistaa nk. [_type guard_](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)eilla, eli funktioilla, jotka tarkastaa, että oliolta löytyy oikeat kentät oikean tyyppisinä ja joiden palautustyyppi on nk. [tyyppipredikaatti](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) (eng. _type predicate_)
 
-Tyyppien tarjoamat tukirakenteet sekä niiden hyödyllisyys riippuu myös siitä, kuinka hyvin tai kokonaisvaltaisesti TypeScriptin ominaisuuksia osataan hyödyntää. Tämä vaatii opettelua ja voi tuntua alkuun hieman haastavalta. Eräs mukava puoli ja ero muihin staattisen tyypityksen ominaisuuksia tarjoaviin teknologioihin kuitenkin on se, että tyyppien käyttö on _vapaaehtoista_.
+- Se, ettei staattinen koodianalyysi varoita tyyppivirheistä ei myöskään tarkoita sitä, etteikö ajonaikaisia virheitä voisi syntyä, joten virheenkäsittely ja virhetilanteisiin varautuminen on suotavaa.
+
+- Tyyppien tarjoamat tukirakenteet sekä niiden hyödyllisyys riippuu myös siitä, kuinka hyvin tai kokonaisvaltaisesti TypeScriptin ominaisuuksia osataan hyödyntää. Tämä vaatii opettelua ja voi tuntua alkuun hieman haastavalta. Eräs mukava puoli ja ero muihin staattisen tyypityksen ominaisuuksia tarjoaviin teknologioihin kuitenkin on se, että tyyppien käyttö on _vapaaehtoista_.
 
 ## [Edellinen](../1/README.md) | [Seuraava](../3/README.md)
