@@ -105,7 +105,7 @@ Näin toteutettuna tyyppitiedon refaktorointi on hyvin suoraviivaista, sillä ty
 
 ## Huomioitavaa
 
-- Tyypin määrittely pelkästään näin ei takaa virheetöntä koodia tai ulkoisesta lähteestä tulleen tiedon oikeellisuutta. Tässä luotetaan siihen, että tiedetään etukäteen missä muodossa data tulee. Näin ei aina kuitenkaan ole ja silloin tiedon ja siitä muodostettavien tyyppien oikeellisuutta on mahdollisuus tarkistaa nk. [_type guard_](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)eilla, eli funktioilla, jotka tarkastaa, että oliolta löytyy oikeat kentät oikean tyyppisinä ja joiden palautustyyppi on nk. [tyyppipredikaatti](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) (eng. _type predicate_)
+- Tyypin määrittely pelkästään näin ei takaa virheetöntä koodia tai ulkoisesta lähteestä tulleen tiedon oikeellisuutta. Tässä luotetaan siihen, että tiedetään etukäteen missä muodossa data tulee. Näin ei aina kuitenkaan ole ja silloin tiedon ja siitä muodostettavien tyyppien oikeellisuutta on mahdollisuus tarkistaa nk. [_type guard_](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)eilla, eli funktioilla, jotka tarkastaa, että tieto on oikean tyyppistä ja joiden palautustyyppi on *tyypillisesti* (pun intended) nk. [tyyppipredikaatti](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) (eng. _type predicate_)
 
 - Se, ettei staattinen koodianalyysi varoita tyyppivirheistä ei myöskään tarkoita sitä, etteikö ajonaikaisia virheitä voisi syntyä, joten virheenkäsittely ja virhetilanteisiin varautuminen on suotavaa.
 
