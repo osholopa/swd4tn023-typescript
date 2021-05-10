@@ -3,7 +3,7 @@
 Alla olevassa kuvassa on funktio laskeKeskiarvo(), joka saa parametrikseen kevättodistuksen arvosanat eli taulukon, jonka alkiot ovat kokonaislukuja ja haluamme funktion palauttavan näiden keskiarvon.
 
 Tältä näyttää funktion yksi mahdollinen JavaScript-toteutus:
-```
+```JS
 function laskeKeskiarvo(paattoTodistus) {
     const lkm = paattoTodistus.length
     const summa = paattoTodistus.reduce((lasketut, nykyArvo) => lasketut + nykyArvo, 0)
@@ -14,7 +14,7 @@ function laskeKeskiarvo(paattoTodistus) {
 console.log(`Keskiarvo: ${laskeKeskiarvo([8, 7, 6, 6, 5, 9, 8, 8, 7, 7, 7, 6, 8])}`)
 ```
 Funktio palauttaa ylläolevalla syötteellä seuraavan tulosteen:
-```
+```sh
 $ node laskeKeskiarvo.js 
 Summa: 92, Lkm: 13
 Keskiarvo: 7.08
@@ -29,7 +29,7 @@ Mitä jos syötettävään taulukkoon olisikin syystä tai toisesta päätynyt m
 Koodi formatoituu oikein, eikä missään näy punaista. Kaikki siis hyvin!
 Ajetaan koodi uudestaan
 
-```
+```sh
 node laskeKeskiarvo.js 
 Summa: 418877768, Lkm: 13
 Keskiarvo: 32221366.77
@@ -41,7 +41,7 @@ Mielenkiintoista. Ensimmäisten kuuden luvun summa on 41, johon lisätään merk
 Yritetään toisintaa sama TypeScriptillä.
 
 Siirretään sama funktio TypeScript-tiedostoon, mutta määritellään funktion parametreille sekä paluuarvolle tyypit ([toFixed()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed) palauttaa merkkijonon):
-```
+```TS
 function laskeKeskiarvo(paattoTodistus: number[]): string {
     const lkm = paattoTodistus.length
     const summa = paattoTodistus.reduce((lasketut, nykyArvo) => lasketut + nykyArvo, 0)
@@ -52,7 +52,7 @@ function laskeKeskiarvo(paattoTodistus: number[]): string {
 console.log(`Keskiarvo: ${laskeKeskiarvo([8, 7, 6, 6, 5, 9, '8', 8, 7, 7, 7, 6, 8])}`)
 ```
 Ajetaan tämä typescriptin node-toteutuksella, [ts-node](https://www.npmjs.com/package/ts-node)lla komennolla `ts-node laskeKeskiarvo.ts`:
-```
+```sh
 /mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:500
     return new TSError(diagnosticText, diagnosticCodes)
            ^

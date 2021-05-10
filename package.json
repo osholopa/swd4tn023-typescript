@@ -1,0 +1,24 @@
+{
+  "name": "swd4tn023-typescript",
+  "version": "1.0.0",
+  "description": "![typescript-logo](./src/images/typescript.png)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osholopa/swd4tn023-typescript.git"
+  },
+  "author": "Oskari Holopainen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/osholopa/swd4tn023-typescript/issues"
+  },
+  "homepage": "https://github.com/osholopa/swd4tn023-typescript#readme",
+  "devDependencies": {
+    "@types/node": "^15.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  }
+}
