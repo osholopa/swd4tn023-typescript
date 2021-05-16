@@ -5,6 +5,13 @@
 # TypeScript
 <img width='200' height='200' src='./src/images/typescript.png'/>
 
+# Sisältö
+1. [Mitä on TypeScript?](src/content/0/README.md)
+2. [Yleisimmät tyypit](src/content/1/README.md)
+3. [Automaattinen tyyppimuunnos](src/content/2/README.md)
+4. [Tyypit kooditason dokumentaationa ja automaattitäydennysvihjeet](src/content/3/README.md)
+5. [Luokat](src/content/4/README.md)
+
 # [Aloita](./src/content/0/README.md)
 
 # Käytetyt lähteet

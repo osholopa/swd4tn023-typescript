@@ -1,4 +1,4 @@
-# Esimerkki: Tyypit kooditason dokumentaationa ja automaattitäydennysvihjeet
+# Tyypit kooditason dokumentaationa ja automaattitäydennysvihjeet
 
 Tässä esimerkissä tarkastellaan tyyppien tuomaa selkeyttä käsiteltäviin tietorakenteisiin ja tyypitetyn koodin itsensä dokumentoivuutta
 

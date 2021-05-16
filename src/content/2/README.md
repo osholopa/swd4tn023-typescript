@@ -1,4 +1,4 @@
-# Esimerkki: Automaattinen tyyppimuunnos
+# Automaattinen tyyppimuunnos
 
 Alla olevassa kuvassa on funktio laskeKeskiarvo(), joka saa parametrikseen kevättodistuksen arvosanat eli taulukon, jonka alkiot ovat kokonaislukuja ja haluamme funktion palauttavan näiden keskiarvon.
 
@@ -37,7 +37,7 @@ Mielenkiintoista. Ensimmäisten kuuden luvun summa on 41, johon lisätään merk
 
 Yritetään toisintaa sama TypeScriptillä.
 
-Siirretään sama funktio TypeScript-tiedostoon, mutta määritellään funktion parametreille sekä paluuarvolle tyypit ([toFixed()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed) palauttaa merkkijonon):
+Siirretään sama funktio TypeScript-tiedostoon, mutta määritellään funktion parametreille sekä paluuarvolle tyypit ([toFixed](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed)-funktio palauttaa merkkijonon, joten määritellään funktion laskeKeskiarvo paluuarvoksi myös merkkijono):
 ```TS
 function laskeKeskiarvo(paattoTodistus: number[]): string {
     const lkm = paattoTodistus.length
