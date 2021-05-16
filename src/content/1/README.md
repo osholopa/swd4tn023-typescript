@@ -1,92 +1,65 @@
-# Esimerkki 1. Automaattinen tyyppimuunnos
+# Yleisimmät tyypit
+Dynaaminen tyypitys tarkoittaa sitä, että *muuttujilla* ei ole tyyppejä. Sen sijaan *arvoilla* on tyypit. Tällöin muuttujien tyyppi on tiedossa vasta suoritusaikaisesti. Staattinen tyypitys puolestaan tarkoittaa sitä, että muutujille on niiden määrittelyn yhteydessä mahdollista antaa myös tyyppi. TypeScript taas tarjoaa työkaluja siihen, että muuttujille on mahdollista määrittää tyyppi.
 
-Alla olevassa kuvassa on funktio laskeKeskiarvo(), joka saa parametrikseen kevättodistuksen arvosanat eli taulukon, jonka alkiot ovat kokonaislukuja ja haluamme funktion palauttavan näiden keskiarvon.
+Tässä joitakin yleisimpiä tyyppejä, joita TypeScriptissä voi käyttää.
 
-Tältä näyttää funktion yksi mahdollinen JavaScript-toteutus:
-```JS
-function laskeKeskiarvo(paattoTodistus) {
-    const lkm = paattoTodistus.length
-    const summa = paattoTodistus.reduce((lasketut, nykyArvo) => lasketut + nykyArvo, 0)
-    console.log(`Summa: ${summa}, Lkm: ${lkm}`)
-    return (summa / lkm).toFixed(2)
-}
+## [Alkeistyypit](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean)
+- `string` - merkkijono
+- `number` - numero
+- `boolean` - totuusarvo
+- `bigint` - isoille kokonaisluvuille ES2020:ssä lisätty tyyppi
 
-console.log(`Keskiarvo: ${laskeKeskiarvo([8, 7, 6, 6, 5, 9, 8, 8, 7, 7, 7, 6, 8])}`)
-```
-Funktio palauttaa ylläolevalla syötteellä seuraavan tulosteen:
-```sh
-$ node laskeKeskiarvo.js 
-Summa: 92, Lkm: 13
-Keskiarvo: 7.08
-```
-Mitä jos syötettävään taulukkoon olisikin syystä tai toisesta päätynyt merkkijono?
+## [Taulukot](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#arrays) (eng. `Array`)
+Taulukon alkioille voi määrittää tyypin antamalla sen esim. näin: `string[]` tai näin: `Array<string>`
 
-*laskeKeskiarvo.js*
+## [any](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any)
+*Any* on TypeScriptin erikoisuus, jolla voi määritellä muuttujan olevan mitä tahansa tyyppiä, jolloin voidaan sallia tyyppien dynaaminen käyttäytyminen eikä tyyppivirheitä esiinny. Tällöin on myös kehittäjän vastuulla huolehtia koodin oikeellisuudesta.
 
-![typescript-logo](./0.png)`
+## [Tyyppi-aliakset](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases) & [Rajapinnat](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces) (eng. `interface` & `type`)
+Näitä voidaan hyödyntää olioiden rakenteen sekä olion kenttien tyyppien määrittämiseen. Ohjelmassa käytettävien olioiden tyypit voi esimerkiksi määritellä omaan tiedostoonsa ja *exportata* sieltä muualle projektin osiin, joissa sen tyyppistä tietoa halutaan hyödyntää. Näiden kahden eroista mainittakoon se, että rajapinnat ovat avoimia kenttien lisäämiselle luomisen jälkeen toisin kuin tyyppi-aliakset eivät ole.
 
-
-Koodi formatoituu oikein, eikä missään näy punaista. Kaikki siis hyvin!
-Ajetaan koodi uudestaan
-
-```sh
-node laskeKeskiarvo.js 
-Summa: 418877768, Lkm: 13
-Keskiarvo: 32221366.77
-```
-Mielenkiintoista. Ensimmäisten kuuden luvun summa on 41, johon lisätään merkkijono '8'. Aina kun numeroon lisätään merkkijono, JavaScript *muuntaa* lopputuloksen merkkijonoksi (ks. [Type coercion](https://developer.mozilla.org/en-US/docs/Glossary/Type_coercion)). Tästä aiheutuu se, että loputkin tähän lisättävät luvut tulee lisätyiksi merkkijonoon, jolloin lopputulos on lopulta 418877768.
-
-
-
-Yritetään toisintaa sama TypeScriptillä.
-
-Siirretään sama funktio TypeScript-tiedostoon, mutta määritellään funktion parametreille sekä paluuarvolle tyypit ([toFixed()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed) palauttaa merkkijonon):
+### Muuttujille voi määritellä tyyppejä eksplisiittisesti kaksoispisteen avulla esimerkiksi näin:
 ```TS
-function laskeKeskiarvo(paattoTodistus: number[]): string {
-    const lkm = paattoTodistus.length
-    const summa = paattoTodistus.reduce((lasketut, nykyArvo) => lasketut + nykyArvo, 0)
-    console.log(`Summa: ${summa}, Lkm: ${lkm}`)
-    return (summa / lkm).toFixed(2)
+const numero: number = 1;
+const merkkijono: string = 'foo';
+const totuusarvo: boolean = false;
+
+type Elokuva = {
+    nimi: string;
+    julkaisuvuosi: number;
 }
 
-console.log(`Keskiarvo: ${laskeKeskiarvo([8, 7, 6, 6, 5, 9, '8', 8, 7, 7, 7, 6, 8])}`)
+const forrestGump: Elokuva = { nimi: 'Forrest Gump', julkaisuvuosi: 1994 };
+
+interface Asiakas {
+    id: number;
+    nimi: string;
+    email: string;
+}
+
+interface EtuAsiakas extends Asiakas {
+    tilaaja: boolean;
+}
+
+const asiakas: EtuAsiakas = { id: 1, email: 'asiakas@testi.fi', nimi: 'Matti Meikäläinen', tilaaja: false }
 ```
-Ajetaan tämä typescriptin node-toteutuksella, [ts-node](https://www.npmjs.com/package/ts-node)lla komennolla `ts-node laskeKeskiarvo.ts`:
-```sh
-/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:500
-    return new TSError(diagnosticText, diagnosticCodes)
-           ^
-TSError: ⨯ Unable to compile TypeScript:
-laskeKeskiarvo.ts:8:61 - error TS2322: Type 'string' is not assignable to type 'number'.
+*esimerkki.ts*
 
-8 console.log(`Keskiarvo: ${laskeKeskiarvo([8, 7, 6, 6, 5, 9, '8', 8, 7, 7, 7, 6, 8])}`)
-                                                              ~~~
+## [Funktioiden parametrit ja paluuarvot](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#functions)
 
-    at createTSError (/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:500:12)
-    at reportTSError (/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:504:19)
-    at getOutput (/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:739:36)
-    at Object.compile (/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:955:32)
-    at Module.m._compile (/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:1043:43)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1121:10)
-    at Object.require.extensions.<computed> [as .ts] (/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:1046:12)
-    at Module.load (node:internal/modules/cjs/loader:972:32)
-    at Function.Module._load (node:internal/modules/cjs/loader:813:14)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:76:12)
+Allaolevassa koodissa funktion summa parametrien a ja b määritellään olevan numeroita ja sulkeiden jälkeen määritellään funktion paluuarvon olevan myös numero.
+```TS
+function summa(a: number, b: number): number {
+    return a + b;
+}
 ```
-Kuten huomataan, tästä aiheutuu virhe eikä sovelluksen kääntäminen onnistu.
+*esimerkki.ts*
 
-Tämän lisäksi koodia ei kielipalvelun ansiosta tarvitse edes lähteä ajamaan havaitakseen virheen, vaan virheellisestä tyypistä ilmoitetaan jo editorin tasolla:
+Tyyppimerkinnät funktioissa auttavat muistamaan ja selkeyttämään minkälaisia arvoja funktiot palauttaa tai ottaa parametreina. Koodin dokumentoidessaan itseään ulkopuolisten on myös helpompi lukea ja ymmärtää koodia, jonka seassa on tietoa muuttujien tyypeistä. Näin ollen he saavat osviittaa siitä, millaista tietoa missäkin kohdassa on liikkeellä.
 
-*laskeKeskiarvo.ts*
+## `null` ja `undefined`
+Nämä ovat myös käytössä alustamattomille muuttujille tai muuttujille ilman varsinaista arvoa. Riippuen siitä, käyttääkö tiukempaa vai löyhempää konfiguraatiota, voi joutua tarkistamaan onko joku arvo `null` ennen kuin käyttää sitä. [Lue lisää](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#null-and-undefined)
 
-![type-error](./1.png)
+### Muihin hyödyllisiin tyyppeihin kuten esimerkiksi [Utility](https://www.typescriptlang.org/docs/handbook/utility-types.html)-tyyppeihin kannattaa tutustua TypeScriptin dokumentaatiosta
 
-Nyt kun ollaan huomattu virhe ajoissa, voidaan korjata se. Pienten huomaamattomien virheiden debuggaaminen voi pahimmillaan kestää tunteja ja olla hermoja raastavaa.
-
-```
-ts-node laskeKeskiarvo.ts
-Summa: 92, Lkm: 13
-Keskiarvo: 7.08
-```
-
-## [Edellinen](../0/README.md) | [Seuraava](../2/README.md)
+## [Edellinen](../0/README.md) | [Seuraava](../2/README.md) | [Alkuun](../../../README.md)

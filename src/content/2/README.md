@@ -1,114 +1,89 @@
-# Esimerkki 2. Tyypit kooditason dokumentaationa ja automaattitäydennysvihjeet
+# Esimerkki: Automaattinen tyyppimuunnos
 
-Tässä esimerkissä tarkastellaan tyyppien tuomaa selkeyttä käsiteltäviin tietorakenteisiin ja tyypitetyn koodin itsensä dokumentoivuutta
+Alla olevassa kuvassa on funktio laskeKeskiarvo(), joka saa parametrikseen kevättodistuksen arvosanat eli taulukon, jonka alkiot ovat kokonaislukuja ja haluamme funktion palauttavan näiden keskiarvon.
 
-Esimerkkinä ES6 & Node osuuden 1. oppitunnilta tuttu tehtävä, jossa luetaan tiedot käyttäjistä ja postauksista ja tulostetaan postaukset käyttäjiinsä liitettynä.
-
-Esimerkissä käydään käyttäjien lista läpi ja jokaiselle käyttäjälle tulostetaan postaukset antamalla käyttäjä parametrina funktiolle `printPosts`. Funktion `printPosts` sisällä suodatetaan postausten taulukosta id:n perusteella oikeat postaukset.
-
+Tältä näyttää funktion yksi mahdollinen JavaScript-toteutus:
 ```JS
-const users = require("./users.json");
-const posts = require("./posts.json");
-
-function printPosts(user) {
-  posts
-    .filter((post) => post.userId === user.id)
-    .forEach((post) => console.log(`- ${post.title}`));
+function laskeKeskiarvo(paattoTodistus) {
+    const lkm = paattoTodistus.length
+    const summa = paattoTodistus.reduce((lasketut, nykyArvo) => lasketut + nykyArvo, 0)
+    console.log(`Summa: ${summa}, Lkm: ${lkm}`)
+    return (summa / lkm).toFixed(2)
 }
 
-users.forEach((user) => {
-  console.log('\n\n' + user.name);
-  printPosts(user)
-});
+console.log(`Keskiarvo: ${laskeKeskiarvo([8, 7, 6, 6, 5, 9, 8, 8, 7, 7, 7, 6, 8])}`)
 ```
-
-Esimerkkitulostus: `node readPrintUsersPosts.js`
-
+Funktio palauttaa ylläolevalla syötteellä seuraavan tulosteen:
+```sh
+$ node laskeKeskiarvo.js 
+Summa: 92, Lkm: 13
+Keskiarvo: 7.08
 ```
-Clementina DuBuque
-- aut amet sed
-- ratione ex tenetur perferendis
-- beatae soluta recusandae
-- qui qui voluptates illo iste minima
-- id minus libero illum nam ad officiis
-- quaerat velit veniam amet cupiditate aut numquam ut sequi
-- quas fugiat ut perspiciatis vero provident
-- laboriosam dolor voluptates
-- temporibus sit alias delectus eligendi possimus magni
-- at nam consequatur ea labore ea harum
+Mitä jos syötettävään taulukkoon olisikin syystä tai toisesta päätynyt merkkijono?
+
+*laskeKeskiarvo.js*
+
+![typescript-logo](./0.png)`
+
+Koodi formatoituu oikein, eikä missään näy punaista. Kaikki siis hyvin!
+Ajetaan koodi uudestaan
+
+```sh
+node laskeKeskiarvo.js 
+Summa: 418877768, Lkm: 13
+Keskiarvo: 32221366.77
 ```
+Mielenkiintoista. Ensimmäisten kuuden luvun summa on 41, johon lisätään merkkijono '8'. Aina kun numeroon lisätään merkkijono, JavaScript *muuntaa* lopputuloksen merkkijonoksi (ks. [Type coercion](https://developer.mozilla.org/en-US/docs/Glossary/Type_coercion)). Tästä aiheutuu se, että loputkin tähän lisättävät luvut tulee lisätyiksi merkkijonoon, jolloin lopputulos on lopulta 418877768.
 
-Meillä on kahdenlaisia olioita: _Käyttäjia_ ja _Postauksia_. Molemmat luetaan jostakin ulkoisesta datalähteestä, tässä tapauksessa JSON-tiedostosta. Tyypillistä olisi, että tiedot haettaisiin jostain ulkoiselta rajapinnalta.
+Yritetään toisintaa sama TypeScriptillä.
 
-Vaikka tässä tapauksessa koodirivejä on vähän ja on suhteellisen helppoa muistaa, mitä kenttiä JavaScript-olioilla on, projektin koon kasvaessa tämä vaikeutuu ja olioita käsitellessä väärinkirjoitettuihin tai olemattomiin kenttiin viittaamisen riski usein kasvaa. Osoittautuu myös työlääksi pomppia koodissa edestakaisin tarkistamassa, minkä tyyppisistä arvoista mikäkin olio koostuu.
-
-Kirjoitettaessa JavaScriptillä `printPosts`-funktiota täytyy itse tietää minkälaisiin kenttiin voi viitata, sillä funktion saadessa käyttäjän parametrina, funktion sisäisellä näkyvyysalueella meillä ei ole käsitystä, mistä parametrina saatu tieto koostuu.
-
-![printPostJs](./0.png)
-
-Tällaisten asioiden muistamista helpottamaan käytetään joskus [JSDoc](https://jsdoc.app/about-getting-started.html)-annotaatioita, esim näin:
-
-```JS
-/**
- * @param user Käyttäjä-olio
- * @param user.id Käyttäjän id
- */
-
-function printPosts(user) {
-  posts
-    .filter((post) => post.userId === user.id)
-    .forEach((post) => console.log(`- ${post.title}`));
-}
-```
-Ylläolevassa tavassa on ongelmana se, että refaktoroinnin yhteydessä pitäisi muistaa päivittää myös kommentit. Tämä unohtuu helposti ja on aikaavievää ja työlästä.
-
-
-Tällaisiin tilanteisiin TypeScript tuo helpotusta. Voimme määritellä käyttäjille ja postauksille omat tyyppinsä esimerkiksi näin:
-
+Siirretään sama funktio TypeScript-tiedostoon, mutta määritellään funktion parametreille sekä paluuarvolle tyypit ([toFixed()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed) palauttaa merkkijonon):
 ```TS
-type User = {
-  id: number;
-  name: string;
+function laskeKeskiarvo(paattoTodistus: number[]): string {
+    const lkm = paattoTodistus.length
+    const summa = paattoTodistus.reduce((lasketut, nykyArvo) => lasketut + nykyArvo, 0)
+    console.log(`Summa: ${summa}, Lkm: ${lkm}`)
+    return (summa / lkm).toFixed(2)
 }
 
-type Post = {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-}
+console.log(`Keskiarvo: ${laskeKeskiarvo([8, 7, 6, 6, 5, 9, '8', 8, 7, 7, 7, 6, 8])}`)
+```
+Ajetaan tämä typescriptin node-toteutuksella, [ts-node](https://www.npmjs.com/package/ts-node)lla komennolla `ts-node laskeKeskiarvo.ts`:
+```sh
+/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:500
+    return new TSError(diagnosticText, diagnosticCodes)
+           ^
+TSError: ⨯ Unable to compile TypeScript:
+laskeKeskiarvo.ts:8:61 - error TS2322: Type 'string' is not assignable to type 'number'.
+
+8 console.log(`Keskiarvo: ${laskeKeskiarvo([8, 7, 6, 6, 5, 9, '8', 8, 7, 7, 7, 6, 8])}`)
+                                                              ~~~
+
+    at createTSError (/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:500:12)
+    at reportTSError (/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:504:19)
+    at getOutput (/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:739:36)
+    at Object.compile (/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:955:32)
+    at Module.m._compile (/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:1043:43)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1121:10)
+    at Object.require.extensions.<computed> [as .ts] (/mnt/c/Users/oskar/AppData/Roaming/npm/node_modules/ts-node/src/index.ts:1046:12)
+    at Module.load (node:internal/modules/cjs/loader:972:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:813:14)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:76:12)
+```
+Kuten huomataan, tästä aiheutuu virhe eikä sovelluksen kääntäminen onnistu.
+
+Tämän lisäksi koodia ei kielipalvelun ansiosta tarvitse edes lähteä ajamaan havaitakseen virheen, vaan virheellisestä tyypistä ilmoitetaan jo editorin tasolla:
+
+*laskeKeskiarvo.ts*
+
+![type-error](./1.png)
+
+Nyt kun ollaan huomattu virhe ajoissa, voidaan korjata se. Pienten huomaamattomien virheiden debuggaaminen pahimmillaan kestää tunteja ja voi olla hermoja raastavaa.
+
+```
+ts-node laskeKeskiarvo.ts
+Summa: 92, Lkm: 13
+Keskiarvo: 7.08
 ```
 
-Tyypeille on yksinkertaisuuden vuoksi määritelty vain rajattu määrä kenttiä ja niistä esimerkin kannalta oleellisimmat.
-
-Nyt voimme lisätä funktioon `printPosts` tyyppimerkinnät:
-
-```TS
-function printPosts(user: User) {
-  posts
-    .filter((post: Post) => post.userId === user.id)
-    .forEach((post: Post) => console.log(`- ${post.title}`));
-}
-```
-
-Tyyppien määrityksen jälkeen olioita on suhteellisen mukava käsitellä oikeanlaisen tyypityksen puitteissa kehitystyökalujen tarjotessa tarkempia automaattitäydennysvihjeitä.
-
-![printPostJs1](./1.png)  
-Tiedetään, että käyttäjillä on _number_-tyyppinen kenttä _id_:
-
-![printPostJs2](./2.png)  
-Ja postauksilla kentät _body, id, title_ ja _userId_
-
-Refaktoroinnin yhteydessä voimme muuttaa vaan tyyppimäärittelyjä ja sama tieto kulkeutuu sinne, missä kyseisen tyyppisiä olioita käytetään. Tyypit voivatkin olla eriytettyinä omiin moduuleihinsa koodissa ja niitä voi hyödyntää projektin eri osissa. 
-
-Näin toteutettuna tyyppitiedon refaktorointi on hyvin suoraviivaista, sillä tyyppiä voidaan muuttaa sieltä missä se on määritelty ja mikäli muutos aiheuttaa virheitä muualla, staattinen koodianalyysi ilmoittaa siitä.
-
-## Huomioitavaa
-
-- Tyypin määrittely pelkästään näin ei takaa virheetöntä koodia tai ulkoisesta lähteestä tulleen tiedon oikeellisuutta. Tässä luotetaan siihen, että tiedetään etukäteen missä muodossa data tulee. Näin ei aina kuitenkaan ole ja silloin tiedon ja siitä muodostettavien tyyppien oikeellisuutta on mahdollisuus tarkistaa nk. [_type guard_](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types)eilla, eli funktioilla, jotka tarkastaa, että tieto on oikean tyyppistä ja joiden palautustyyppi on *tyypillisesti* (pun intended) nk. [tyyppipredikaatti](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates) (eng. _type predicate_)
-
-- Se, ettei staattinen koodianalyysi varoita tyyppivirheistä ei myöskään tarkoita sitä, etteikö ajonaikaisia virheitä voisi syntyä, joten virheenkäsittely ja virhetilanteisiin varautuminen on suotavaa.
-
-- Tyyppien tarjoamat tukirakenteet sekä niiden hyödyllisyys riippuu myös siitä, kuinka hyvin tai kokonaisvaltaisesti TypeScriptin ominaisuuksia osataan hyödyntää. Tämä vaatii opettelua ja voi tuntua alkuun hieman haastavalta. Eräs mukava puoli ja ero muihin staattisen tyypityksen ominaisuuksia tarjoaviin teknologioihin kuitenkin on se, että tyyppien käyttö on _vapaaehtoista_.
-
-## [Edellinen](../1/README.md) | [Seuraava](../3/README.md)
+## [Edellinen](../1/README.md) | [Seuraava](../3/README.md) | [Alkuun](../../../README.md)
